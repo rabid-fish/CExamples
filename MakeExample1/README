@@ -1,0 +1,17 @@
+This example demonstrates the use of #include to tie .c files together.
+
+This example does not actually use make or automake.  It assumes you
+will use standard command line calls to compile.  Here is the command:
+  gcc -o example main.c
+
+Which will compile main.c, example1.c, example2.c and link them all into
+the executable "example".  gcc is smart about following the "#include"
+statements at the top of main.c which point straight at the other c
+files.
+
+To run the executable, type:
+  ./example
+
+Which should produce the output:
+  Hello, World 1
+  Hello, World 2
