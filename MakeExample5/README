@@ -1,0 +1,28 @@
+This example demonstrates use of autoconf and automake with the source
+in a subdirectory.  Run these commands to compile:
+  aclocal
+  autoconf
+  automake -a
+  ./configure
+  make
+
+Which will compile main.c, example1.c, example2.c and link them all into
+the executable "example".
+
+Automake generates a Makefile based on developer-supplied information
+provided in configure.ac and Makefile.am.
+  configure.ac -> provides program name, version, author
+  Makefile.am  -> list of files to compile and the executable to create
+
+To run the executable, type:
+  ./example
+
+Which should produce the output:
+  Hello, World 1
+  Hello, World 2
+
+Read more about the make and autotools toolchains:
+http://autotoolset.sourceforge.net/tutorial.html#SEC110
+http://en.wikipedia.org/wiki/Make_(software)
+http://check.sourceforge.net/doc/check_html/check_3.html#Tutorial
+https://www.student.cs.uwaterloo.ca/~isg/res/unix/make/ex_v3
