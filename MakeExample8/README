@@ -1,0 +1,18 @@
+Written with help from
+http://realmike.org/blog/2010/07/18/gnu-automake-by-example/
+http://www.freesoftwaremagazine.com/articles/automatically_writing_makefiles_with_autotools
+
+This example demonstrates how to make a library.  Run these commands to 
+compile:
+  libtoolize
+  aclocal
+  autoconf
+  automake -a
+  ./configure
+  make
+
+Which will:
+ 1) compile example1.c, example2.c and link them all into the library 
+ lib/libexample.a
+ 2) compile main.c and link it with libexample.a into the executable
+ src/example
