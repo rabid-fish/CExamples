@@ -6,4 +6,5 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_CONFIG_FILES([Makefile lib/Makefile src/Makefile tests/Makefile])
 AC_CONFIG_SRCDIR(src/main.c)
+AC_CONFIG_MACRO_DIR([m4])
 AC_OUTPUT
