@@ -3,6 +3,7 @@ rm -rf libtool
 rm -rf .deps src/.deps lib/.deps tests/.deps
 rm -rf src/.libs tests/.libs
 rm -rf build-aux/*
+rm -rf m4
 
 rm aclocal.m4
 rm configure config.log config.status
