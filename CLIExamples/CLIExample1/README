@@ -1,0 +1,51 @@
+Let's write a program that allows us to manage our time.  One would 
+think this could be simple and straightforward, but we've got some
+aims along the way that should make it interesting:
+ - allow command line input
+ - track data via structs
+ - unit test coverage for everything non ui related
+ - figure out how to create an API we can reuse later
+ - learn how to manage strings
+
+This is all very beginner stuff, which is my skill level at this point
+anyways.
+
+The data structures:
+
+ activity
+ - activity_id
+ - description
+ - keywords
+ 
+ activity_x
+ - parent_activity_id
+ - child_activity_id
+ - child_activity_order
+
+ keyword
+ - keyword_id
+ - description
+
+ keyword_x
+ - keyword_id
+ - activity_id
+ - order
+
+There will always be a parent "activity" with id of 0 that all other
+activities will stem from.
+
+Api Calls (tm is short for "Time Manager"):
+
+  tm_activity_create
+  tm_activity_read
+  tm_activity_update
+  tm_activity_delete
+
+  tm_activity_join
+  
+  tm_keyword_create
+  tm_keyword_read
+  tm_keyword_update
+  tm_keyword_delete
+  
+  tm_keyword_join
