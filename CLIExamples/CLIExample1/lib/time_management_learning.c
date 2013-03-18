@@ -6,17 +6,56 @@ typedef struct tm_l_contact {
 	char *name;
 } CONTACT;
 
+CONTACT *
+tm_l_struct_return_pointer(CONTACT *c)
+{
+	return c;
+}
+
+CONTACT
+tm_l_struct_return(CONTACT c)
+{
+	return c;
+}
+
+void
+tm_l_struct_call()
+{
+	CONTACT c1 = { 1, "John Deer" };
+	CONTACT c2 = tm_l_struct_return(c1);
+	CONTACT *c3;
+	c3 = tm_l_struct_return_pointer(&c1);
+
+	printf("=====\nRunning tm_l_struct\n");
+	printf("CONTACT c1 = { 1, \"John Deer\" };\n");
+	printf("Contact name: %s\n", c1.name);
+	printf("Contact name: %s\n", c2.name);
+	printf("Contact name: %s\n", c3->name);
+}
+
 void
 tm_l_struct()
 {
 	CONTACT c1 = { 1, "John Deer" };
-	CONTACT c2 = c1;
-//	struct point *c3 = 
+
+	CONTACT c2 = c1;    // shallow copy the value of the struct
+	c2.id = 2;
+	c2.name = "Jane Doe";
+
+	CONTACT *c3 = &c1;  // point to the same struct instance as c1 (not a ptr)
+	CONTACT *c4 = c3;   // point to the same struct instance as c3 (a ptr)
+	CONTACT **c5 = &c4; // point to the pointer
 
 	printf("=====\nRunning tm_l_struct\n");
 	printf("CONTACT c = { 1, \"John Deer\" };\n");
 	printf("Contact name: %s\n", c1.name);
 	printf("Contact name: %s\n", c2.name);
+	printf("Contact name: %s\n", c3->name);
+	printf("Contact name: %s\n", (*c3).name);
+	printf("Contact name: %s\n", c4->name);
+	printf("Contact name: %s\n", (*c5)->name);
+	printf("Contact name pointer: %p\n", c1.name);
+	printf("Contact name pointer: %p\n", c2.name);
 }
 
 void
@@ -270,6 +309,8 @@ tm_l_execute(char *message)
 	tm_l_char_array_parameter("hello");
 	
 	tm_l_char_array_call();
-	*/
+	
 	tm_l_struct();
+	*/
+	tm_l_struct_call();
 }
