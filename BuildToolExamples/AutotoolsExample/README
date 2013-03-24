@@ -1,0 +1,7 @@
+This very simple program shows how to make include a library like
+glib.h and get the compiler to be happy when accessed via autotools.
+
+It would be an understatement to say autotools hath made this task
+take wayyy too many hours to get working.  I am now searching for
+a more sane build tool.
+
