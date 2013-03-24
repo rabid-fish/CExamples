@@ -2,6 +2,7 @@
 
 int main()
 {
-	tm_l_execute("Hello, World\n");
+	//tm_l_execute("Hello, World\n");
+	tm_c_execute();
 	return 0;
 }

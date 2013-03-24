@@ -5,8 +5,9 @@
 
 START_TEST (test_execute)
 {
-	tm_l_execute("Test Message\n");
-	
+	//tm_l_execute("Test Message\n");
+	tm_c_execute();	
+
 	return 0;
 }
 END_TEST
