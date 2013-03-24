@@ -7,3 +7,9 @@ To build this project, run these commands:
   cmake .
   make
 
+To run the tests, run:
+  make test
+
+To run the compiled executable, run:
+  src/time_management
+
