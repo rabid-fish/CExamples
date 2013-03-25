@@ -10,6 +10,83 @@ struct activity
 	char* message;
 };
 
+struct activity*
+tm_a_find(int index)
+{
+	int i = 1;
+	GSList* current = list;
+	struct activity* a = current == NULL ? NULL : current->data;
+
+	while (i++ < index)
+	{
+		current = current->next;
+ 		a = current == NULL ? NULL : current->data;
+		if (current == NULL) break;
+	}
+	
+	return a;
+}
+
+struct activity*
+tm_a_create(char* message)
+{
+	struct activity* a = malloc( sizeof( *a ) );
+	a->message = strdup(message);
+	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Created activity: %p - %s\n", a, a->message);
+	return a;
+}
+
+struct activity*
+tm_a_edit(int index, char* message)
+{
+	struct activity* a = tm_a_find(index);
+	
+	if (a != NULL)
+	{
+		free(a->message);
+		a->message = strdup(message);
+	}
+
+	return a;
+}
+
+void
+tm_a_destroy_activity(struct activity* a)
+{
+	free(a->message);
+	free(a);
+}
+
+void
+tm_a_destroy_activities()
+{
+	int i;
+	GSList* current = list;
+	while (current != NULL)
+	{
+		g_log("tm_a", G_LOG_LEVEL_DEBUG, "Freeing up another struct\n");
+		tm_a_destroy_activity(current->data);
+		current = current->next;
+	}
+}
+
+int
+tm_a_remove(int index)
+{
+	int success = 0;
+	struct activity* a = tm_a_find(index);
+
+	if (a != NULL)
+	{
+		g_log("tm_a", G_LOG_LEVEL_DEBUG, "Removing from list %p - %s\n", a, a->message);
+		list = g_slist_remove(list, a);
+		tm_a_destroy_activity(a);
+		success = 1;
+	}
+	
+	return success;
+}
+
 void
 tm_a_display_activities()
 {
@@ -34,15 +111,6 @@ tm_a_display_activities()
 	}
 }
 
-struct activity*
-tm_a_create(char* message)
-{
-	struct activity* a = malloc( sizeof( *a ) );
-	a->message = strdup(message);
-	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Created activity: %p - %s\n", a, a->message);
-	return a;
-}
-
 void
 tm_a_choose_create()
 {
@@ -52,7 +120,7 @@ tm_a_choose_create()
 	
 	printf("Description of the activity: ");
 	entries = scanf("%49s", message);
-	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Entries: %d, message: %s\n", entries, message);
+	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Create entries: %d, message: %s\n", entries, message);
 	if (entries == 0) return;
 
 	a = tm_a_create(message);
@@ -62,51 +130,25 @@ tm_a_choose_create()
 void
 tm_a_choose_edit()
 {
+	int entries;
+	int index = 0;
 	
-}
+	printf("Id of the activity to edit: ");
+	entries = scanf("%d", &index);
+	if (entries == 0) return;
 
-void
-tm_a_destroy_activity(struct activity* a)
-{
-	free(a->message);
-	free(a);
-}
+	struct activity* a;
+	char* message = malloc(sizeof(char) * 50);
+	
+	printf("Description of the activity: ");
+	entries = scanf("%49s", message);
+	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Edit entries: %d, index: %d, message: %s\n", entries, index, message);
+	if (entries == 0) return;
 
-tm_a_destroy_activities()
-{
-	int i;
-	GSList* current = list;
-	while (current != NULL)
-	{
-		g_log("tm_a", G_LOG_LEVEL_DEBUG, "Freeing up another struct\n");
-		tm_a_destroy_activity(current->data);
-		current = current->next;
-	}
-}
-
-void
-tm_a_remove(int index)
-{
-	int i = 1;
-	GSList* current = list;
-	struct activity* a = current == NULL ? NULL : current->data;
-
-	while (i++ < index)
-	{
-		current = current->next;
- 		a = current == NULL ? NULL : current->data;
-		if (current == NULL) break;
-	}
-
-	if (current == NULL)
+	a = tm_a_edit(index, message);
+	if (a == NULL)
 	{
 		printf("Item not found\n");
-	}
-	else
-	{
-		g_log("tm_a", G_LOG_LEVEL_DEBUG, "Removing from list %p - %s\n", a, a->message);
-		list = g_slist_remove(list, a);
-		tm_a_destroy_activity(a);
 	}
 }
 
@@ -120,7 +162,11 @@ tm_a_choose_remove()
 	entries = scanf("%d", &index);
 	if (entries == 0) return;
 
-	tm_a_remove(index);
+	int success = tm_a_remove(index);
+	if (!success)
+	{
+		printf("Item not found\n");
+	}
 }
 
 void
