@@ -2,7 +2,7 @@
 
 int main()
 {
-	char* s = "Hello from main()";
-	tm_a_execute(s);
+	tm_c_execute();
 	return 0;
 }
+

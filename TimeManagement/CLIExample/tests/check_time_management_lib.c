@@ -2,11 +2,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <check.h>
-#include "../src/time_management_lib.h"
+#include "../lib/time_management_lib.h"
 
 START_TEST (test_execute)
 {
-	tm_c_execute("Hello from tests");	
+	tm_a_create("one");
+	tm_a_create("two");
+	tm_a_create("three");
+
+	tm_a_update(2, "numero dos");
+
+	struct activity* a = tm_a_read(2);
+	char* message = a->message;
+	// assert message equals "numero dos"
+
+	tm_a_cleanup();
 }
 END_TEST
 
