@@ -7,16 +7,24 @@ struct activity
 	char* message;
 };
 
-struct activity*  tm_a_create    (char* message);
-struct activity*  tm_a_read      (int index);
-struct activity*  tm_a_update    (int index, char* message);
-             int  tm_a_delete    (int index);
+typedef enum { ACTIVITY, TAG } model_t;
 
-GSList*           tm_a_read_all  ();
-void              tm_a_cleanup   ();
+struct activity*  tm_a_activity_create    (char* message);
+GSList*           tm_a_activity_read_all  ();
+struct activity*  tm_a_activity_read      (int index);
+struct activity*  tm_a_activity_update    (int index, char* message);
+             int  tm_a_activity_delete    (int index);
+
+struct activity*  tm_a_tag_create         (char* message);
+GSList*           tm_a_tag_read_all       ();
+struct activity*  tm_a_tag_read           (int index);
+struct activity*  tm_a_tag_update         (int index, char* message);
+             int  tm_a_tag_delete         (int index);
+
+void              tm_a_cleanup            ();
 
 // main loop for the command line client
-void              tm_c_execute   ();
+void              tm_c_execute            ();
 
 #endif
 

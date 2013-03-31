@@ -14,7 +14,7 @@ tm_c_choose_create()
 	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Create entries: %d, message: %s\n", entries, message);
 	if (entries == 0) return;
 
-	tm_a_create(message);
+	tm_a_activity_create(message);
 }
 
 void
@@ -22,7 +22,7 @@ tm_c_choose_read_all()
 {
 	int i = 0;
 	struct activity* a;
-	GSList* current = tm_a_read_all();
+	GSList* current = tm_a_activity_read_all();
 	int length = g_slist_length(current);
 	
 	if (length == 0)
@@ -59,7 +59,7 @@ tm_c_choose_update()
 	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Edit entries: %d, index: %d, message: %s\n", entries, index, message);
 	if (entries == 0) return;
 
-	a = tm_a_update(index, message);
+	a = tm_a_activity_update(index, message);
 	if (a == NULL)
 	{
 		printf("Item not found\n");
@@ -76,7 +76,7 @@ tm_c_choose_delete()
 	entries = scanf("%d", &index);
 	if (entries == 0) return;
 
-	int success = tm_a_delete(index);
+	int success = tm_a_activity_delete(index);
 	if (!success)
 	{
 		printf("Item not found\n");

@@ -4,19 +4,19 @@
 #include <string.h>
 #include "time_management_lib.h"
 
-GSList* list = NULL;
+GSList* list_activities = NULL;
 
 GSList*
-tm_a_read_all()
+tm_a_activity_read_all()
 {
-	return list;
+	return list_activities;
 }
 
 struct activity*
-tm_a_read(int index)
+tm_a_activity_read(int index)
 {
 	int i = 1;
-	GSList* current = list;
+	GSList* current = list_activities;
 	struct activity* a = current == NULL ? NULL : current->data;
 
 	while (i++ < index)
@@ -30,21 +30,21 @@ tm_a_read(int index)
 }
 
 struct activity*
-tm_a_create(char* message)
+tm_a_activity_create(char* message)
 {
 	struct activity* a = malloc( sizeof( *a ) );
 	a->message = strdup(message);
 	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Created activity: %p - %s\n", a, a->message);
 
-	list = g_slist_append(list, a);
+	list_activities = g_slist_append(list_activities, a);
 
 	return a;
 }
 
 struct activity*
-tm_a_update(int index, char* message)
+tm_a_activity_update(int index, char* message)
 {
-	struct activity* a = tm_a_read(index);
+	struct activity* a = tm_a_activity_read(index);
 	
 	if (a != NULL)
 	{
@@ -63,15 +63,15 @@ tm_a_destroy_activity(struct activity* a)
 }
 
 int
-tm_a_delete(int index)
+tm_a_activity_delete(int index)
 {
 	int success = 0;
-	struct activity* a = tm_a_read(index);
+	struct activity* a = tm_a_activity_read(index);
 
 	if (a != NULL)
 	{
 		g_log("tm_a", G_LOG_LEVEL_DEBUG, "Removing from list %p - %s\n", a, a->message);
-		list = g_slist_remove(list, a);
+		list_activities = g_slist_remove(list_activities, a);
 		tm_a_destroy_activity(a);
 		success = 1;
 	}
@@ -82,10 +82,10 @@ tm_a_delete(int index)
 void
 tm_a_cleanup()
 {
-	g_log("tm_a", G_LOG_LEVEL_DEBUG, "The list is %d items long prior to cleanup\n", g_slist_length(list));
+	g_log("tm_a", G_LOG_LEVEL_DEBUG, "The list is %d items long prior to cleanup\n", g_slist_length(list_activities));
 
 	int i;
-	GSList* current = list;
+	GSList* current = list_activities;
 	while (current != NULL)
 	{
 		g_log("tm_a", G_LOG_LEVEL_DEBUG, "Freeing up another struct\n");
@@ -93,7 +93,7 @@ tm_a_cleanup()
 		current = current->next;
 	}
 
-	g_slist_free(list);
+	g_slist_free(list_activities);
 }
 
 

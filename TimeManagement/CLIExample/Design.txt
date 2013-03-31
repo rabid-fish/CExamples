@@ -4,14 +4,14 @@ Design Document
     id
     description
 
-  categories
+  tags
     id
     description
 
   x_activity_description
     id
     sort order
-    activity_id
+    tag_id
     description_id
 
   Short Term - Next 24 hours

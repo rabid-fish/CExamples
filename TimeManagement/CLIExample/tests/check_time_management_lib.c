@@ -6,13 +6,13 @@
 
 START_TEST (test_execute)
 {
-	tm_a_create("one");
-	tm_a_create("two");
-	tm_a_create("three");
+	tm_a_activity_create("one");
+	tm_a_activity_create("two");
+	tm_a_activity_create("three");
 
-	tm_a_update(2, "numero dos");
+	tm_a_activity_update(2, "numero dos");
 
-	struct activity* a = tm_a_read(2);
+	struct activity* a = tm_a_activity_read(2);
 	char* message = a->message;
 	// assert message equals "numero dos"
 
