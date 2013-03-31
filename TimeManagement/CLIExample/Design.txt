@@ -1,0 +1,20 @@
+Design Document
+
+  activity
+    id
+    description
+
+  categories
+    id
+    description
+
+  x_activity_description
+    id
+    sort order
+    activity_id
+    description_id
+
+  Short Term - Next 24 hours
+  Mid Term - Next 5 business days
+  Long Term - More than a week out
+
