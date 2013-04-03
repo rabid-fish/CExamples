@@ -2,17 +2,20 @@ Design Document
 
   activity
     id
+    title
     description
+    date created
 
   tags
     id
     description
+    sort_order
 
   x_activity_description
     id
-    sort order
+    sort_order
+    activity_id
     tag_id
-    description_id
 
   Short Term - Next 24 hours
   Mid Term - Next 5 business days

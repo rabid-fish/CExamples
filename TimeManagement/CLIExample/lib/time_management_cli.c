@@ -7,14 +7,14 @@ void
 tm_c_choose_create()
 {
 	int entries;
-	char* message = malloc(sizeof(char) * 50);
+	char* description = malloc(sizeof(char) * 50);
 	
 	printf("Description of the activity: ");
-	entries = scanf("%49s", message);
-	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Create entries: %d, message: %s\n", entries, message);
+	entries = scanf("%49s", description);
+	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Create entries: %d, description: %s\n", entries, description);
 	if (entries == 0) return;
 
-	tm_a_activity_create(message);
+	tm_a_activity_create(description);
 }
 
 void
@@ -35,8 +35,8 @@ tm_c_choose_read_all()
 	while (current != NULL)
 	{
 		a = current->data;
-		g_log("tm_c", G_LOG_LEVEL_DEBUG, "Current activity: %p - %s\n", a, a->message);
-		printf(" #%d : %s\n", ++i, a->message);
+		g_log("tm_c", G_LOG_LEVEL_DEBUG, "Current activity: %p - %s\n", a, a->description);
+		printf(" #%d : %s\n", ++i, a->description);
 		current = current->next;
 	}
 }
@@ -45,21 +45,21 @@ void
 tm_c_choose_update()
 {
 	int entries;
-	int index = 0;
+	int id = 0;
 	
 	printf("Id of the activity to edit: ");
-	entries = scanf("%d", &index);
+	entries = scanf("%d", &id);
 	if (entries == 0) return;
 
 	struct activity* a;
-	char* message = malloc(sizeof(char) * 50);
+	char* description = malloc(sizeof(char) * 50);
 	
 	printf("Description of the activity: ");
-	entries = scanf("%49s", message);
-	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Edit entries: %d, index: %d, message: %s\n", entries, index, message);
+	entries = scanf("%49s", description);
+	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Edit entries: %d, id: %d, description: %s\n", entries, id, description);
 	if (entries == 0) return;
 
-	a = tm_a_activity_update(index, message);
+	a = tm_a_activity_update(id, description);
 	if (a == NULL)
 	{
 		printf("Item not found\n");
@@ -70,13 +70,13 @@ void
 tm_c_choose_delete()
 {
 	int entries;
-	int index = 0;
+	int id = 0;
 	
 	printf("Id of the activity to remove: ");
-	entries = scanf("%d", &index);
+	entries = scanf("%d", &id);
 	if (entries == 0) return;
 
-	int success = tm_a_activity_delete(index);
+	int success = tm_a_activity_delete(id);
 	if (!success)
 	{
 		printf("Item not found\n");
@@ -109,7 +109,7 @@ tm_c_execute()
 		}
 		else if (choice == 2)
 		{
-			break;
+			tm_c_choose_update();
 		}
 		else if (choice == 3)
 		{
@@ -125,5 +125,4 @@ tm_c_execute()
 
 	tm_a_cleanup();
 }
-
 

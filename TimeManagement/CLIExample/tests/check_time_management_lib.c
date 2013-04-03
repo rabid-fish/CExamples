@@ -4,7 +4,7 @@
 #include <check.h>
 #include "../lib/time_management_lib.h"
 
-START_TEST (test_execute)
+START_TEST (test_activity)
 {
 	tm_a_activity_create("one");
 	tm_a_activity_create("two");
@@ -13,7 +13,23 @@ START_TEST (test_execute)
 	tm_a_activity_update(2, "numero dos");
 
 	struct activity* a = tm_a_activity_read(2);
-	char* message = a->message;
+	char* description = a->description;
+	// assert message equals "numero dos"
+
+	tm_a_cleanup();
+}
+END_TEST
+
+START_TEST (test_tag)
+{
+	tm_a_tag_create("one");
+	tm_a_tag_create("two");
+	tm_a_tag_create("three");
+
+	tm_a_tag_update(2, "numero dos");
+
+	struct tag* t = tm_a_tag_read(2);
+	char* description = t->description;
 	// assert message equals "numero dos"
 
 	tm_a_cleanup();
@@ -26,7 +42,8 @@ time_management_suite()
 	Suite *s = suite_create("Time Management");
 	TCase *tc_time_management = tcase_create("Time Management");
 	
-	tcase_add_test(tc_time_management, test_execute);
+	tcase_add_test(tc_time_management, test_activity);
+	tcase_add_test(tc_time_management, test_tag);
 	
 	suite_add_tcase(s, tc_time_management);
 	
