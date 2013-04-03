@@ -2,37 +2,37 @@
 #include <stdio.h>
 #include <string.h>
 #include <check.h>
-#include "../lib/time_management_lib.h"
+#include "../lib/tm_lib.h"
 
 START_TEST (test_activity)
 {
-	tm_a_activity_create("one");
-	tm_a_activity_create("two");
-	tm_a_activity_create("three");
+	tma_activity_create("one");
+	tma_activity_create("two");
+	tma_activity_create("three");
 
-	tm_a_activity_update(2, "numero dos");
+	tma_activity_update(2, "numero dos");
 
-	struct activity* a = tm_a_activity_read(2);
+	struct activity* a = tma_activity_read(2);
 	char* description = a->description;
 	// assert message equals "numero dos"
 
-	tm_a_cleanup();
+	tma_cleanup();
 }
 END_TEST
 
 START_TEST (test_tag)
 {
-	tm_a_tag_create("one");
-	tm_a_tag_create("two");
-	tm_a_tag_create("three");
+	tma_tag_create("one");
+	tma_tag_create("two");
+	tma_tag_create("three");
 
-	tm_a_tag_update(2, "numero dos");
+	tma_tag_update(2, "numero dos");
 
-	struct tag* t = tm_a_tag_read(2);
+	struct tag* t = tma_tag_read(2);
 	char* description = t->description;
 	// assert message equals "numero dos"
 
-	tm_a_cleanup();
+	tma_cleanup();
 }
 END_TEST
 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
-#include "time_management_lib.h"
+#include "tm_lib.h"
 
 void
 tm_c_choose_create()
@@ -14,7 +14,7 @@ tm_c_choose_create()
 	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Create entries: %d, description: %s\n", entries, description);
 	if (entries == 0) return;
 
-	tm_a_activity_create(description);
+	tma_activity_create(description);
 }
 
 void
@@ -22,7 +22,7 @@ tm_c_choose_read_all()
 {
 	int i = 0;
 	struct activity* a;
-	GSList* current = tm_a_activity_read_all();
+	GSList* current = tma_activity_read_all();
 	int length = g_slist_length(current);
 	
 	if (length == 0)
@@ -59,7 +59,7 @@ tm_c_choose_update()
 	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Edit entries: %d, id: %d, description: %s\n", entries, id, description);
 	if (entries == 0) return;
 
-	a = tm_a_activity_update(id, description);
+	a = tma_activity_update(id, description);
 	if (a == NULL)
 	{
 		printf("Item not found\n");
@@ -76,7 +76,7 @@ tm_c_choose_delete()
 	entries = scanf("%d", &id);
 	if (entries == 0) return;
 
-	int success = tm_a_activity_delete(id);
+	int success = tma_activity_delete(id);
 	if (!success)
 	{
 		printf("Item not found\n");
@@ -123,6 +123,6 @@ tm_c_execute()
 		tm_c_choose_read_all();
 	}
 
-	tm_a_cleanup();
+	tma_cleanup();
 }
 

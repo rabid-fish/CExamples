@@ -9,7 +9,7 @@ GSList* list_tags = NULL;
 
 
 GSList*
-tm_a_list(enum model_t model)
+tma_list(enum model_t model)
 {
 	switch (model)
 	{
@@ -23,10 +23,10 @@ tm_a_list(enum model_t model)
 }
 
 void*
-tm_a_read(enum model_t model, int id)
+tma_read(enum model_t model, int id)
 {
 	int i = 1;
-	GSList* current = tm_a_list(model);
+	GSList* current = tma_list(model);
 	void* node = current == NULL ? NULL : current->data;
 
 	while (i++ < id)
@@ -40,7 +40,7 @@ tm_a_read(enum model_t model, int id)
 }
 
 void*
-tm_a_create(enum model_t model, void* node)
+tma_create(enum model_t model, void* node)
 {
 	switch (model)
 	{
@@ -56,10 +56,10 @@ tm_a_create(enum model_t model, void* node)
 }
 
 int
-tm_a_free(enum model_t model, void* node)
+tma_free(enum model_t model, void* node)
 {
 	int success = 0;
-	g_log("tm_a", G_LOG_LEVEL_DEBUG, "Removing from list and freeing %p\n", node);
+	g_log("tma", G_LOG_LEVEL_DEBUG, "Removing from list and freeing %p\n", node);
 
 	switch (model)
 	{
@@ -81,21 +81,21 @@ tm_a_free(enum model_t model, void* node)
 }
 
 int
-tm_a_delete(enum model_t model, int id)
+tma_delete(enum model_t model, int id)
 {
 	int success = 0;
-	void* node = tm_a_read(model, id);
+	void* node = tma_read(model, id);
 
 	if (node != NULL)
 	{
-		tm_a_free(model, node);
+		tma_free(model, node);
 	}
 	
 	return success;
 }
 
 void
-tm_a_cleanup()
+tma_cleanup()
 {
 	GSList* lists[2];
 	lists[0] = list_activities;
@@ -112,13 +112,13 @@ tm_a_cleanup()
 		GSList* list = lists[i];
 		enum model_t model = models[i];
 
-		g_log("tm_a", G_LOG_LEVEL_DEBUG, "The list is %d items long prior to cleanup\n", g_slist_length(list));
+		g_log("tma", G_LOG_LEVEL_DEBUG, "The list is %d items long prior to cleanup\n", g_slist_length(list));
 
 		int i;
 		GSList* current = list;
 		while (current != NULL)
 		{
-			tm_a_free(model, current->data);
+			tma_free(model, current->data);
 			current = current->next;
 		}
 
