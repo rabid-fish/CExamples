@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <string.h>
-#include "time_management_internal.h"
-#include "time_management_lib.h"
+#include "tm_internal.h"
+#include "tm_lib.h"
 
 GSList*
 tm_a_tag_read_all()

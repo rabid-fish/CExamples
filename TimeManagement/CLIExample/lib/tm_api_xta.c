@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <string.h>
-#include "time_management_internal.h"
-#include "time_management_lib.h"
+#include "tm_internal.h"
+#include "tm_lib.h"
 
 GHashTable *hashTable = g_hash_table_new(g_int_hash, g_int_equal);
 

@@ -1,7 +1,7 @@
 #ifndef TIME_MANAGEMENT_INTERNAL
 #define TIME_MANAGEMENT_INTERNAL
 #include <glib.h>
-#include "time_management_lib.h"
+#include "tm_lib.h"
 
 GSList*  tm_a_list      (enum model_t model);
 void*    tm_a_read      (enum model_t model, int index);

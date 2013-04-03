@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <string.h>
-#include "time_management_internal.h"
+#include "tm_internal.h"
 
 GSList* list_activities = NULL;
 GSList* list_tags = NULL;
