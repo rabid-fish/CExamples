@@ -5,6 +5,12 @@
 #include "tm_internal.h"
 #include "tm_lib.h"
 
+struct tag*
+tma_tag_read(int id)
+{
+	return (struct tag*) tma_read(TAG, id);
+}
+
 GSList*
 tma_tag_read_all()
 {
@@ -12,18 +18,12 @@ tma_tag_read_all()
 }
 
 struct tag*
-tma_tag_read(int id)
-{
-	return (struct tag*) tma_read(TAG, id);
-}
-
-struct tag*
 tma_tag_create(char* description)
 {
 	struct tag* t = malloc( sizeof( *t ) );
 	t->description = strdup(description);
-		
-	g_log("tma", G_LOG_LEVEL_DEBUG, "Created tag: %p - %s\n", t, t->description);
+	
+	g_log("tma", G_LOG_LEVEL_DEBUG, "Created tag: %p - %s", t, t->description);
 	tma_create(TAG, t);
 
 	return t;

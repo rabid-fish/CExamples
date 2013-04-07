@@ -11,7 +11,7 @@ tm_c_choose_create()
 	
 	printf("Description of the activity: ");
 	entries = scanf("%49s", description);
-	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Create entries: %d, description: %s\n", entries, description);
+	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Create entries: %d, description: %s", entries, description);
 	if (entries == 0) return;
 
 	tma_activity_create(description);
@@ -35,7 +35,7 @@ tm_c_choose_read_all()
 	while (current != NULL)
 	{
 		a = current->data;
-		g_log("tm_c", G_LOG_LEVEL_DEBUG, "Current activity: %p - %s\n", a, a->description);
+		g_log("tm_c", G_LOG_LEVEL_DEBUG, "Current activity: %p - %s", a, a->description);
 		printf(" #%d : %s\n", ++i, a->description);
 		current = current->next;
 	}
@@ -56,7 +56,7 @@ tm_c_choose_update()
 	
 	printf("Description of the activity: ");
 	entries = scanf("%49s", description);
-	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Edit entries: %d, id: %d, description: %s\n", entries, id, description);
+	g_log("tm_c", G_LOG_LEVEL_DEBUG, "Edit entries: %d, id: %d, description: %s", entries, id, description);
 	if (entries == 0) return;
 
 	a = tma_activity_update(id, description);
@@ -86,6 +86,8 @@ tm_c_choose_delete()
 void
 tm_c_execute()
 {
+	tma_initialize();
+	
 	while (1)
 	{
 		// start asking the user for choices
@@ -101,7 +103,7 @@ tm_c_execute()
 		entries = scanf("%d", &choice);
 		if (entries == 0) break;
 		
-		g_log("tm_c", G_LOG_LEVEL_DEBUG, "You chose #%d\n", choice);
+		g_log("tm_c", G_LOG_LEVEL_DEBUG, "You chose #%d", choice);
 
 		if (choice == 1)
 		{

@@ -4,22 +4,35 @@
 #include <string.h>
 #include "tm_internal.h"
 
-GSList* list_activities = NULL;
-GSList* list_tags = NULL;
+GSList* list_activity = NULL;
+GSList* list_tag = NULL;
+GSList* list_xta = NULL;
 
+void
+tma_initialize()
+{
+	tma_xta_initialize();
+}
 
 GSList*
 tma_list(enum model_t model)
 {
+	GSList* list = NULL;
+	
 	switch (model)
 	{
 		case ACTIVITY:
-			return list_activities;
+			list = list_activity;
+			break;
 		case TAG:
-			return list_tags;
+			list = list_tag;
+			break;
+		case XTA:
+			list = list_xta;
+			break;
 	}
 
-	return NULL;
+	return list;
 }
 
 void*
@@ -45,10 +58,13 @@ tma_create(enum model_t model, void* node)
 	switch (model)
 	{
 		case ACTIVITY:
-			list_activities = g_slist_append(list_activities, node);
+			list_activity = g_slist_append(list_activity, node);
 			break;
 		case TAG:
-			list_tags = g_slist_append(list_tags, node);
+			list_tag = g_slist_append(list_tag, node);
+			break;
+		case XTA:
+			list_xta = g_slist_append(list_xta, node);
 			break;
 	}
 
@@ -59,18 +75,22 @@ int
 tma_free(enum model_t model, void* node)
 {
 	int success = 0;
-	g_log("tma", G_LOG_LEVEL_DEBUG, "Removing from list and freeing %p\n", node);
-
+	g_log("tma", G_LOG_LEVEL_DEBUG, "Removing from list and freeing %i - %p", model, node);
+	
 	switch (model)
 	{
 		case ACTIVITY:
-			list_activities = g_slist_remove(list_activities, node);
+			list_activity = g_slist_remove(list_activity, node);
 			free(((struct activity*) node)->description);
 			success = 1;
 			break;
 		case TAG:
-			list_tags = g_slist_remove(list_tags, node);
+			list_tag = g_slist_remove(list_tag, node);
 			free(((struct tag*) node)->description);
+			success = 1;
+			break;
+		case XTA:
+			list_xta = g_slist_remove(list_xta, node);
 			success = 1;
 			break;
 	}
@@ -97,29 +117,27 @@ tma_delete(enum model_t model, int id)
 void
 tma_cleanup()
 {
-	GSList* lists[2];
-	lists[0] = list_activities;
-	lists[1] = list_tags;
+	const int LIST_MAX = sizeof(enum model_t) - 1;
 
-	enum model_t models[2];
-	models[0] = ACTIVITY;
-	models[1] = TAG;
+	GSList* lists[LIST_MAX];
+	lists[0] = list_activity;
+	lists[1] = list_tag;
+	lists[2] = list_xta;
 
 	int i = 0;
-	int max = 2;
-	for (i = 0; i < max; i++)
+	for (i = 0; i < LIST_MAX; i++)
 	{
 		GSList* list = lists[i];
-		enum model_t model = models[i];
 
-		g_log("tma", G_LOG_LEVEL_DEBUG, "The list is %d items long prior to cleanup\n", g_slist_length(list));
+		g_log("tma", G_LOG_LEVEL_DEBUG, "The list for enum %d is %d items long prior to cleanup", i, g_slist_length(list));
 
-		int i;
 		GSList* current = list;
+		GSList* buffer = NULL;
 		while (current != NULL)
 		{
-			tma_free(model, current->data);
-			current = current->next;
+			buffer = current->next;
+			tma_free(i, current->data);
+			current = buffer;
 		}
 
 		g_slist_free(list);

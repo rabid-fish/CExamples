@@ -1,4 +1,7 @@
 Design Document
+---------------
+
+Data Model
 
   activity
     id
@@ -6,18 +9,54 @@ Design Document
     description
     date created
 
-  tags
+  tag
     id
     description
     sort_order
 
-  x_activity_description
+  x_tag_activity
     id
-    sort_order
-    activity_id
     tag_id
+    activity_id
+    sort_order
+
+Menuing system
+
+  Top Level
+    Create an activity
+    Update an activity
+    Delete an activity
+    Reorder an activity
+    Tag manager
+    Export / Import
+  
+  Tag Manager
+    Update a tag
+    Delete a tag
+    Reorder a tag
+
+  Export / Import
+    Export to file
+    Import from file
+
+Example Tags
 
   Short Term - Next 24 hours
   Mid Term - Next 5 business days
   Long Term - More than a week out
+
+What's happening under the covers
+
+  For "Display tags and activities"
+    read a list of tags by sort order
+    loop through tags
+      print tag description
+      read a list of activities for tag by sort order
+      loop through activities
+        print activity description
+
+  For "Create an activity"
+    provide activity description << creates the activity
+    provide tag description      << read tag to get id, create tag if missing, 
+                                    create xta
 

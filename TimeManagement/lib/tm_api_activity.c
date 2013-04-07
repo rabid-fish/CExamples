@@ -6,16 +6,24 @@
 #include "tm_lib.h"
 
 
+struct activity*
+tma_activity_read(int id)
+{
+	return (struct activity*) tma_read(ACTIVITY, id);
+}
+
 GSList*
 tma_activity_read_all()
 {
 	return tma_list(ACTIVITY);
 }
 
-struct activity*
-tma_activity_read(int id)
+GSList*
+tma_activity_read_by_tag(int tag_id)
 {
-	return (struct activity*) tma_read(ACTIVITY, id);
+	// Get the hash
+	// read the activity list from the hash for the given tag_id
+	return NULL;
 }
 
 struct activity*
@@ -40,6 +48,7 @@ tma_activity_update(int id, char* description)
 	{
 		free(a->description);
 		a->description = strdup(description);
+		g_log("tma", G_LOG_LEVEL_DEBUG, "Updated activity: %p - %s\n", a, a->description);
 	}
 
 	return a;
